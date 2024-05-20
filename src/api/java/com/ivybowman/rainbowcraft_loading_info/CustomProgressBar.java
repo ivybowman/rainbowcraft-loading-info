@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import java.io.Closeable;
 import java.util.Objects;

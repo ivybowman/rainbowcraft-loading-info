@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.Version;
@@ -42,7 +42,7 @@ public final class LoadingScreenApi {
         final MethodHandles.Lookup lookup = MethodHandles.lookup();
         try {
             final Class<?> alsClass = ClassLoader.getSystemClassLoader().loadClass(
-                "com.lautner.mindful_loading_info.ActualLoadingScreen"
+                "com.ivybowman.rainbowcraft_loading_info.ActualLoadingScreen"
             );
 
             try {
@@ -95,17 +95,17 @@ public final class LoadingScreenApi {
                 loadFailed(">=1.0.4", AvailableFeatures.CUSTOM_PROGRESS_BARS, e);
             }
 
-            System.out.println("[MindfulLoadingInfo] API loaded with features: " + AvailableFeatures.toString(features));
+            System.out.println("[RainbowCraftLoadingInfo] API loaded with features: " + AvailableFeatures.toString(features));
         } catch (Exception e) {
-            final String message = "[MindfulLoadingInfo] Failed to load LoadingScreenApi. No API features are available.";
-            if (FabricLoader.getInstance().isModLoaded("mindful-loading-info")) {
+            final String message = "[RainbowCraftLoadingInfo] Failed to load LoadingScreenApi. No API features are available.";
+            if (FabricLoader.getInstance().isModLoaded("rainbowcraft-loading-info")) {
                 System.err.println(message);
                 e.printStackTrace();
             } else {
-                // This API could be called with Mindful Loading Info simply absent, in which case this is *not* an error
+                // This API could be called with Rainbowcraft Loading Info simply absent, in which case this is *not* an error
                 // condition
                 System.out.println(message);
-                System.out.println("[MindfulLoadingInfo] This is not an error, because Mindful Loading Info is not installed.");
+                System.out.println("[RainbowCraftLoadingInfo] This is not an error, because RainbowCraft Loading Info is not installed.");
             }
         }
 
@@ -126,7 +126,7 @@ public final class LoadingScreenApi {
             );
         } catch (NoSuchMethodException ignored) {
         } catch (Exception e) {
-            System.err.println("[MindfulLoadingInfo] Failed to find FabricLoader.invokeEntrypoints");
+            System.err.println("[RainbowCraftLoadingInfo] Failed to find FabricLoader.invokeEntrypoints");
             e.printStackTrace();
         }
         FABRIC_0_14_23_INVOKE_ENTRYPOINTS = invokeEntrypoints;
@@ -134,18 +134,18 @@ public final class LoadingScreenApi {
 
     private static void loadFailed(String mlsVersionRequired, long feature, Exception e) {
         FabricLoader.getInstance()
-            .getModContainer("mindful-loading-info")
+            .getModContainer("rainbowcraft-loading-info")
             .ifPresent(container -> {
                 try {
                     final Version version = container.getMetadata().getVersion();
                     if (VersionPredicate.parse(mlsVersionRequired).test(version)) {
                         System.err.println(
-                            "[MindfulLoadingInfo] Failed to load feature \"" +
+                            "[RainbowCraftLoadingInfo] Failed to load feature \"" +
                                 AvailableFeatures.toString(feature) +
                                 "\" from the API!"
                         );
-                        System.err.println("[MindfulLoadingInfo] This should not have happened on the version " + version);
-                        System.err.println("[MindfulLoadingInfo] This feature should be compatible with " + mlsVersionRequired);
+                        System.err.println("[RainbowCraftLoadingInfo] This should not have happened on the version " + version);
+                        System.err.println("[RainbowCraftLoadingInfo] This feature should be compatible with " + mlsVersionRequired);
                         e.printStackTrace();
                     }
                 } catch (VersionParsingException versionParsingException) {
@@ -182,13 +182,13 @@ public final class LoadingScreenApi {
     }
 
     /**
-     * Invokes an entrypoint with a clean API. If Mindful Loading Info is available, its progress will show up in the
+     * Invokes an entrypoint with a clean API. If RainbowCraft Loading Info is available, its progress will show up in the
      * loading screen.
      *
      * @throws RuntimeException If any entrypoints threw an exception
      *
      * @apiNote This feature is <i>always</i> available, regardless of the return value of {@link #getFeatures}.
-     * Calling this without Mindful Loading Info will work always, but just won't show up in the (non-existent) loading
+     * Calling this without RainbowCraft Loading Info will work always, but just won't show up in the (non-existent) loading
      * screen.
      */
     public static <T> void invokeEntrypoint(String name, Class<T> type, Consumer<? super T> invoker) throws RuntimeException {
@@ -231,7 +231,7 @@ public final class LoadingScreenApi {
     }
 
     /**
-     * Returns whether the Mindful Loading Info (and the game in general) is running in a headless environment. If
+     * Returns whether the RainbowCraft Loading Info (and the game in general) is running in a headless environment. If
      * {@link #getFeatures} doesn't include {@link AvailableFeatures#HEADLESS_CHECK}, this will return the value of
      * {@link GraphicsEnvironment#isHeadless}.
      *
@@ -255,7 +255,7 @@ public final class LoadingScreenApi {
 
     /**
      * Returns whether IPC is being used for the loading screen, and hasn't been disabled with
-     * {@code mindful-loading-info.disableIpc}. If {@link #isHeadless} returns {@code true}, this will return
+     * {@code rainbowcraft-loading-info.disableIpc}. If {@link #isHeadless} returns {@code true}, this will return
      * {@code false}. If {@link #getFeatures} doesn't include {@link AvailableFeatures#IPC_CHECK}, this will return
      * {@code false}.
      *

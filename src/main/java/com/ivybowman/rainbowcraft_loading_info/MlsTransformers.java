@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 public final class MlsTransformers {
     private static final boolean DUMP_TRANSFORMED_CLASSES =
-        Boolean.getBoolean("mindful-loading-info.dumpTransformedClasses");
+        Boolean.getBoolean("rainbowcraft-loading-info.dumpTransformedClasses");
     private static volatile boolean notifiedClassDump;
 
     public static final String FABRIC_LOADER_IMPL = "net/fabricmc/loader/impl/FabricLoaderImpl";
@@ -38,7 +38,7 @@ public final class MlsTransformers {
     private static final String INTERNAL_MOD_METADATA = "org/quiltmc/loader/impl/metadata/qmj/InternalModMetadata";
     private static final String QUILT_VERSION = "org/quiltmc/loader/api/Version";
 
-    public static final String ACTUAL_LOADING_SCREEN = "com/lautner/mindful_loading_info/ActualLoadingScreen";
+    public static final String ACTUAL_LOADING_SCREEN = "com/ivybowman/rainbowcraft_loading_info/ActualLoadingScreen";
 
     private static final Collection<Consumer<ClassNode>> FABRIC_LOADER_IMPL_TRANSFORMER = Collections.singleton(
         MlsTransformers::instrumentFabricLoaderImplInvokeEntrypoints
@@ -66,7 +66,7 @@ public final class MlsTransformers {
             synchronized (MlsTransformers.class) {
                 if (!notifiedClassDump) {
                     notifiedClassDump = true;
-                    System.out.println("[MindfulLoadingInfo] Transformed class dumping is active");
+                    System.out.println("[RainbowCraftLoadingInfo] Transformed class dumping is active");
                     try {
                         final Path dumpDir = Paths.get(".mlsDebugDump");
                         if (Files.isDirectory(dumpDir)) {
@@ -85,7 +85,7 @@ public final class MlsTransformers {
                             });
                         }
                     } catch (Throwable t) {
-                        System.err.println("[MindfulLoadingInfo] [ERROR] Failed to clear debug dump dir");
+                        System.err.println("[RainbowCraftLoadingInfo] [ERROR] Failed to clear debug dump dir");
                     }
                 }
             }
@@ -114,7 +114,7 @@ public final class MlsTransformers {
                     break;
             }
             if (transformer != null) {
-                System.out.println("[MindfulLoadingInfo] Transforming " + name);
+                System.out.println("[RainbowCraftLoadingInfo] Transforming " + name);
                 final ClassReader reader = new ClassReader(bytes);
                 final ClassNode clazz = new ClassNode();
                 reader.accept(clazz, 0);
@@ -122,7 +122,7 @@ public final class MlsTransformers {
                     try {
                         part.accept(clazz);
                     } catch (Exception e) {
-                        System.err.println("[MindfulLoadingInfo] [ERROR] Transformer " + part + " for " + name + " failed");
+                        System.err.println("[RainbowCraftLoadingInfo] [ERROR] Transformer " + part + " for " + name + " failed");
                         e.printStackTrace();
                     }
                 }
@@ -135,14 +135,14 @@ public final class MlsTransformers {
                         Files.createDirectories(dumpedPath.getParent());
                         Files.write(dumpedPath, result);
                     } catch (Exception e) {
-                        System.err.println("[MindfulLoadingInfo] [ERROR] Failed to dump class " + name);
+                        System.err.println("[RainbowCraftLoadingInfo] [ERROR] Failed to dump class " + name);
                         e.printStackTrace();
                     }
                 }
                 return result;
             }
         } catch (Throwable t) {
-            System.err.println("[MindfulLoadingInfo] [ERROR] Completely failed to transform " + name);
+            System.err.println("[RainbowCraftLoadingInfo] [ERROR] Completely failed to transform " + name);
             t.printStackTrace();
         }
         return null;
@@ -154,7 +154,7 @@ public final class MlsTransformers {
             .findFirst()
             .orElse(null);
         if (method == null) {
-            System.out.println("[MindfulLoadingInfo] New-style FabricLoaderImpl.invokeEntrypoints not found. Assuming old Fabric.");
+            System.out.println("[RainbowCraftLoadingInfo] New-style FabricLoaderImpl.invokeEntrypoints not found. Assuming old Fabric.");
             return;
         }
         final ListIterator<AbstractInsnNode> it = method.instructions.iterator();

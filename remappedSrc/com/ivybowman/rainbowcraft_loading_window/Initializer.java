@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;

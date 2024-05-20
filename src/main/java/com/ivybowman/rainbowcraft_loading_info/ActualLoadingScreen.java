@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import net.fabricmc.loader.api.FabricLoader;
@@ -14,7 +14,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-import static com.lautner.mindful_loading_info.MlsTransformers.ACTUAL_LOADING_SCREEN;
+import static com.ivybowman.rainbowcraft_loading_info.MlsTransformers.ACTUAL_LOADING_SCREEN;
 
 public class ActualLoadingScreen {
     private static final boolean IS_IPC_CLIENT = Boolean.getBoolean("mlsipc.present");
@@ -24,7 +24,7 @@ public class ActualLoadingScreen {
     ));
     public static final boolean IS_HEADLESS = GraphicsEnvironment.isHeadless();
     public static final boolean ENABLE_IPC =
-        !IS_IPC_CLIENT && !IS_HEADLESS && !Boolean.getBoolean("mindful-loading-info.disableIpc");
+        !IS_IPC_CLIENT && !IS_HEADLESS && !Boolean.getBoolean("rainbowcraft-loading-info.disableIpc");
 
     // Unlike progressBars, this is populated on both the IPC client and IPC server, allowing it to be used from the API
     public static final Map<String, Integer> progress = new LinkedHashMap<>();
@@ -44,7 +44,7 @@ public class ActualLoadingScreen {
 
     public static void startLoadingScreen(boolean fabricReady) {
         final Path gameDir = fabricReady ? FabricLoader.getInstance().getGameDir() : Paths.get(".").toAbsolutePath();
-        final Path runDir = gameDir.resolve(".cache/mindful-loading-info");
+        final Path runDir = gameDir.resolve(".cache/rainbowcraft-loading-info");
 
         if (!IS_IPC_CLIENT) {
             try {
@@ -71,11 +71,11 @@ public class ActualLoadingScreen {
         } else {
             if (fabricReady) {
                 runningOnQuilt = FabricLoader.getInstance().isModLoaded("quilt_loader");
-                configDir = FabricLoader.getInstance().getConfigDir().resolve("mindful-loading-info");
+                configDir = FabricLoader.getInstance().getConfigDir().resolve("rainbowcraft-loading-info");
             } else {
                 // This code is certainly something. I don't have any ideas for improvement, though.
                 runningOnQuilt = System.getProperty("java.class.path").contains("quilt-loader");
-                configDir = Paths.get("config/mindful-loading-info").toAbsolutePath();
+                configDir = Paths.get("config/rainbowcraft-loading-info").toAbsolutePath();
             }
         }
 
@@ -94,7 +94,7 @@ public class ActualLoadingScreen {
                 if (fabricReady) {
                     Files.copy(
                         FabricLoader.getInstance()
-                            .getModContainer("mindful-loading-info")
+                            .getModContainer("rainbowcraft-loading-info")
                             .orElseThrow(AssertionError::new)
                             .getRootPaths().get(0)
                             .resolve("META-INF/jars/flatlaf-3.0.jar"),
@@ -105,7 +105,7 @@ public class ActualLoadingScreen {
                 final Path mlsJarPath;
                 if (fabricReady) {
                     mlsJarPath = FabricLoader.getInstance()
-                        .getModContainer("mindful-loading-info")
+                        .getModContainer("rainbowcraft-loading-info")
                         .orElseThrow(AssertionError::new)
                         .getOrigin()
                         .getPaths()
@@ -163,7 +163,7 @@ public class ActualLoadingScreen {
             dialog.setIconImage(ImageIO.read(
                 Files.exists(iconPath)
                     ? iconPath.toUri().toURL()
-                    : ClassLoader.getSystemResource("assets/mindful-loading-info/icon.png")
+                    : ClassLoader.getSystemResource("assets/rainbowcraft-loading-info/icon.png")
             ));
         } catch (Exception e) {
             println("Failed to load icon.png", e);
@@ -175,7 +175,7 @@ public class ActualLoadingScreen {
             background = new ImageIcon(
                 Files.exists(backgroundPath)
                     ? backgroundPath.toUri().toURL()
-                    : ClassLoader.getSystemResource("assets/mindful-loading-info/banner.png")
+                    : ClassLoader.getSystemResource("assets/rainbowcraft-loading-info/banner.png")
             );
             background.setImage(background.getImage().getScaledInstance(960, 540, Image.SCALE_SMOOTH));
         } catch (Exception e) {

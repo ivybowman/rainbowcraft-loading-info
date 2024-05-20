@@ -1,4 +1,4 @@
-package com.lautner.mindful_loading_info;
+package com.ivybowman.rainbowcraft_loading_info;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.LanguageAdapter;
@@ -12,9 +12,9 @@ import net.lenni0451.reflect.Methods;
 
 import java.nio.file.Files;
 
-import static com.lautner.mindful_loading_info.MlsTransformers.ACTUAL_LOADING_SCREEN;
+import static com.ivybowman.rainbowcraft_loading_info.MlsTransformers.ACTUAL_LOADING_SCREEN;
 
-public class MindfulLoadingInfo implements LanguageAdapter {
+public class RainbowCraftLoadingInfo implements LanguageAdapter {
     private static final boolean RUNNING_ON_QUILT = FabricLoader.getInstance().isModLoaded("quilt_loader");
     private static final String ENTRYPOINT_UTILS = RUNNING_ON_QUILT
         ? MlsTransformers.QUILT_ENTRYPOINT_UTILS
@@ -30,16 +30,16 @@ public class MindfulLoadingInfo implements LanguageAdapter {
     }
 
     public static void init() throws Throwable {
-        System.out.println("[MindfulLoadingInfo] I just want to say... I'm loading *really* early.");
-        if (System.setProperty("mindful-loading-info.loaded", "true") != null) {
-            System.err.println("[MindfulLoadingInfo] [WARN] Mindful Loading Info installed as both a mod and an agent.");
-            System.err.println("[MindfulLoadingInfo] [WARN] Please avoid doing this. To avoid issues, the mod has disabled itself.");
+        System.out.println("[RainbowCraftLoadingInfo] I just want to say... I'm loading *really* early.");
+        if (System.setProperty("rainbowcraft-loading-info.loaded", "true") != null) {
+            System.err.println("[RainbowCraftLoadingInfo] [WARN] RainbowCraft Loading Info installed as both a mod and an agent.");
+            System.err.println("[RainbowCraftLoadingInfo] [WARN] Please avoid doing this. To avoid issues, the mod has disabled itself.");
             return;
         }
 
         ClassLoaders.addToSystemClassPath(
             FabricLoader.getInstance()
-                .getModContainer("mindful-loading-info")
+                .getModContainer("rainbowcraft-loading-info")
                 .orElseThrow(AssertionError::new)
                 .getRootPaths().get(0)
                 .toUri().toURL()
@@ -54,7 +54,7 @@ public class MindfulLoadingInfo implements LanguageAdapter {
 
         final byte[] alsData = Files.readAllBytes(
             FabricLoader.getInstance()
-                .getModContainer("mindful-loading-info")
+                .getModContainer("rainbowcraft-loading-info")
                 .orElseThrow(AssertionError::new)
                 .findPath(ACTUAL_LOADING_SCREEN + ".class")
                 .orElseThrow(AssertionError::new)
@@ -86,7 +86,7 @@ public class MindfulLoadingInfo implements LanguageAdapter {
         try {
             init();
         } catch (Throwable t) {
-            System.err.println("[MindfulLoadingInfo] Failed to initialize loading screen. Aborting!");
+            System.err.println("[RainbowCraftLoadingInfo] Failed to initialize loading screen. Aborting!");
             throw new Error(t);
         }
     }
