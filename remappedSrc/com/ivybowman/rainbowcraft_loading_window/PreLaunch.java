@@ -43,7 +43,7 @@ public class PreLaunch implements ClientModInitializer {
     private void createAndShowUI(JLabel memoryInfoLabel) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-        JFrame loadingFrame = new JFrame("Minecraft");
+        JFrame loadingFrame = new JFrame("RainbowCraft Client");
         loadingFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Prevent default close operation
         loadingFrame.setResizable(false);
 
@@ -61,7 +61,7 @@ public class PreLaunch implements ClientModInitializer {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.setLayout(new BorderLayout());
 
-        JLabel loadingLabel = new JLabel("Loading Mindful Optimized...");
+        JLabel loadingLabel = new JLabel("Loading RainbowCraft Client...");
         mainPanel.add(loadingLabel, BorderLayout.NORTH);
 
         // Add the progress bar
